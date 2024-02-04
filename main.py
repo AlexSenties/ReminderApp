@@ -1,3 +1,6 @@
+# Created by Vaughn
+# https://github.com/AlexSenties/vs-GPT
+
 print('''                                                          
          _               _                  _       _         
  ___ ___| |_ _ _ ___ ___| |   ___ ___ _____|_|___ _| |___ ___ 

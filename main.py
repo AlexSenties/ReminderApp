@@ -1,5 +1,4 @@
-# Created by Vaughn
-# https://github.com/AlexSenties/vs-GPT
+# Created by Vaughn and Alex
 
 print('''                                                          
          _               _                  _       _         
@@ -31,22 +30,43 @@ class TaskManager:
             return '\n'.join(all_tasks)
     def nl_process_command(self, command):
         # Basic natural language patterns
+        # Enhanced natural language patterns with memory for last action
+        self.last_added_task = None
         add_patterns = [
             r'remind (?:me )?to (.+)',
             r'add (.+) to my (?:todo list|tasks)',
             r'schedule (.+)',
-            r"don't forget to (.+)"
+            r"don't forget to (.+)",
+            r'can you (?:please )?add (.+) to (?:the )?(?:todo list|tasks)',
+            r'please remind me about (.+)',
+            r'put (.+) on my (?:agenda|schedule|list)'
         ]
         remove_patterns = [
             r'remove (.+) from my (?:todo list|tasks)',
             r'delete (.+) from (?:todo list|tasks)',
-            r'cancel (.+)'
+            r'cancel (.+)',
+            r'forget about (.+)',
+            r"don't add that",
+            r'cancel that'
         ]
         list_patterns = [
             r'what\'s on my (?:todo list|tasks)',
             r'(?:show|list) (?:me )?(?:all )?(?:my )?(?:todo list|tasks)',
             r'what do I (?:have to do|need to do)?',
+            r'give me an overview of (?:my )?(?:tasks|todo list)'
         ]
+        task_extraction_patterns = [
+            r'go shopping for (.+)',
+            r'buy (.+) from the store',
+            r'pick up (.+)'
+        ]
+
+        # Method to extract task from command
+        def extract_task(self, command):
+            for pattern in self.task_extraction_patterns:
+                if match := re.match(pattern, command, re.I):
+                    return match.group(1).strip()
+            return None
         # Combine patterns and check for matches
         for pattern in add_patterns:
             if match := re.match(pattern, command, re.I):
